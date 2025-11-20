@@ -1,0 +1,158 @@
+[build-system]
+requires = ["uv_build>=0.9.4,<0.10.0"]
+build-backend = "uv_build"
+
+[project]
+name = "uv-template"
+version = "0.1.0"
+description = "Add your description here"
+readme = { file = "README.md", content-type = "text/markdown" }
+keywords = ['python','cli']
+license = { text = "MIT" }
+license-files = ["LICENSE"]
+authors = [{ name = "BipolarExpedition", email = "lastdoc39@gmail.com" }]
+requires-python = ">=3.12,<4.0"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "License :: OSI Approved :: MIT License",
+]
+dependencies = [
+    "rich>=14.2.0",
+    "typer>=0.20.0"
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.2",
+    "pytest-cov>=7.0.0",
+    # "pytest-mock", # As needed
+    "ruff>=0.14.2",
+    "mypy>=1.18.2",
+]
+
+[project.scripts]
+uv-template = "uv_template.cli:app"
+
+[tool.pyright]
+include = ["src", "tests"]
+exclude = [
+    "**/node_modules",
+    "**/__pycache__",
+    ".venv",
+    ".git"
+]
+venvPath = "."
+venv = ".venv"
+typeCheckingMode = "standard"
+reportMissingImports = true
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = [
+    "--import-mode=importlib",
+    "--cov=uv_template",
+    "--cov-report=term-missing",
+    "-ra"
+]
+norecursedirs = [
+    ".git",
+    ".venv",
+    ".secrets",
+    "design_docs",
+    "docs"
+]
+
+[tool.mypy]
+python_version = "3.12"
+files = ["src", "tests"]
+check_untyped_defs = true
+disallow_any_generics = true
+ignore_missing_imports = true
+no_implicit_optional = true
+show_error_codes = true
+warn_return_any = true
+warn_unused_ignores = true
+exclude = [
+    "docs",
+    ".secrets",
+    "design_docs"
+]
+# Optional depending on project
+# plugins = "pydantic.mypy"
+
+[tool.coverage.report]
+skip_empty = true
+exclude_lines = [
+    "nocov",
+    "pragma: no cover",
+    "if __name__ == \"__main__\":",
+    "raise NotImplementedError"
+]
+
+[tool.coverage.run]
+branch = true
+parallel = true
+source = ["src"]
+
+[tool.ruff]
+target-version = "py312"
+indent-width = 4
+line-length = 120
+respect-gitignore = true
+extend-exclude = [
+    ".secrets",
+    "design_docs"
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+[tool.ruff.lint]
+# Defaults are ["E4", "E7", "E9", "F"]
+extend-select = [
+    "B",    # flake8-bugbear: Opinionated rules for common design problems/potential bugs.
+    "I",    # isort: Sort imports automatically (integrates well with VS Code's "Organize Imports").
+    "UP",   # pyupgrade: Flags code that can be updated to newer Python versions.
+    "C4",   # flake8-comprehensions: Encourages better comprehension usage.
+    "SIM",  # flake8-simplify: Suggests code simplifications.
+    "ISC",  # flake8-implicit-str-concat: Catches implicit string concatenations.
+    "ASYNC",    # async/with errors
+    "S",    # flake8-bandit, security checks
+    "A",    # flake8-builtins, shadowing builtins
+    "INT",  # flake8-gettext, international strings formatting
+    "ICN",  # flake8-import-conventions. avoid unsupported import aliases
+    "FAST", # FastAPI checks
+    "PT",   # pytest checks
+    "PTH",  # use pathlib
+
+]
+# Consider:  LOG, G, DOC
+extend-ignore = [
+    "B008",         # occaisonal false positives
+    "S104",
+    "S110","S112",  # Log exceptions
+    "S303","S324",  # Insecure hash functions
+    "S311",         # suspicious-non-cryptographic-random-usage
+    "S404",         # subprocess module
+    "S602","S603","S604",   #
+    "S605","S606", "S607",  #
+]
+fixable = ["ALL"]
+unfixable = []
+# Allow unused variables when underscore-prefixed.
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+# # 4. Ignore `E402` (import violations) in all `__init__.py` files, and in selected subdirectories.
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["E402"]
+"**/{tests,docs,tools}/*" = ["E402", "S101"]

@@ -1,0 +1,33 @@
+{
+    "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+    "python.analysis.autoImportCompletions": true,
+
+// RUFF: The authority on formatting and linting
+    "[python]": {
+        "editor.defaultFormatter": "charliermarsh.ruff",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll": "explicit",
+            "source.organizeImports": "explicit"
+        },
+    },
+    "mypy-type-checker.args": ["--config-file=${workspaceFolder}/pyproject.toml"],
+    "mypy-type-checker.importStrategy": "fromEnvironment",
+    
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "ruff.lsp.workspaceFolder": "${workspaceFolder}",
+    "ruff.configurationPreference": "filesystemFirst",
+    "ruff.configuration": "pyproject.toml",
+
+    // CLEANUP: Hide cache files from the file explorer
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/.pytest_cache": true,
+        "**/.mypy_cache": true,
+        "**/.ruff_cache": true
+    }
+}

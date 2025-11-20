@@ -1,0 +1,12 @@
+{
+    "recommendations": [
+        "ms-python.python",
+        "ms-python.mypy-type-checker",
+        "charliermarsh.ruff",
+        // "tamasfe.even-better-toml", more features but slower
+        "juggernautjp.less-toml",
+        "chrmarti.regex",
+        "oderwat.indent-rainbow",
+        // "ms-toolsai.jupyter"  if using notebooks
+    ]
+}
