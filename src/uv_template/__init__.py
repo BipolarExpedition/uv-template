@@ -3,16 +3,19 @@ import importlib.metadata
 # Refer to pyproject.toml or package metadata for metadata
 
 
-def get_version() -> str:
+def _get_version(meta_name: str | None) -> str:
     try:
-        return importlib.metadata.version(__package__ or __name__)
+        if meta_name:
+            return importlib.metadata.version(meta_name)
     except importlib.metadata.PackageNotFoundError:
-        return "0.0.0-dev"
+        pass
     except Exception:
         return "0.0.0-error"
 
+    return "0.0.0-dev"
 
-def get_license_type(metadata: importlib.metadata.PackageMetadata) -> str:
+
+def _get_license_type(metadata: importlib.metadata.PackageMetadata) -> str:
     """Return SPDX short identifier or Unknown"""
     try:
         _license = metadata["License-Expression"]
@@ -29,7 +32,7 @@ def get_license_type(metadata: importlib.metadata.PackageMetadata) -> str:
     return "Unknown"
 
 
-def get_project_name(metadata: importlib.metadata.PackageMetadata) -> str:
+def _get_project_name(metadata: importlib.metadata.PackageMetadata) -> str:
     """Return project name"""
     return metadata.get("Name") or __package__ or __name__ or "Unknown Project"
 
@@ -43,26 +46,49 @@ PROJECT_NAME = "Unknown"
 PROJECT_VERSION = "0.0.0-error"
 
 # Try to set values, but avoid failing
-try:
-    mdata: importlib.metadata.PackageMetadata = importlib.metadata.metadata(__package__ or __name__)
 
-    __version__ = get_version()
-    PROJECT_VERSION = __version__
+attempts = [
+    __package__,
+    __name__,
+    __package__.replace("_", "-") if __package__ else None,
+    __package__.replace("-", "_") if __package__ else None,
+]
 
-    if not mdata:
-        raise ValueError("Failed to get package metadata")
+_mdata: importlib.metadata.PackageMetadata | None = None
+_meta_name = None
+for chosen_name in attempts:
+    try:
+        if chosen_name:
+            _meta_name = chosen_name
+            _mdata = importlib.metadata.metadata(_meta_name)
+            break
+    except importlib.metadata.PackageNotFoundError:
+        continue
+    except Exception:
+        pass
 
-    PROJECT_NAME = get_project_name(mdata)
-    PROJECT_LICENSE = get_license_type(mdata)
+__version__ = _get_version(_meta_name)
+PROJECT_VERSION = __version__
 
-    if "Author" in mdata:
-        __author__ = mdata["Author"]
+if _mdata:
+    try:
+        PROJECT_NAME = _get_project_name(_mdata)
+    except Exception:
+        PROJECT_NAME = "Unknown"
+
+    try:
+        PROJECT_LICENSE = _get_license_type(_mdata)
+    except Exception:
+        PROJECT_LICENSE = "Unknown"
+
+    if "Author" in _mdata:
+        __author__ = _mdata["Author"]
         PROJECT_AUTHOR = __author__
     else:
         PROJECT_AUTHOR = "Unknown"
 
-    if "Author-Email" in mdata:
-        __email__ = mdata["Author-Email"]
+    if "Author-Email" in _mdata:
+        __email__ = _mdata["Author-Email"]
         try:
             if "<" in __email__:
                 # Split at the first "<"
@@ -86,14 +112,13 @@ try:
         PROJECT_COPYRIGHT = f"Copyright (c) {PROJECT_AUTHOR} ({PROJECT_EMAIL})\nLicense: {PROJECT_LICENSE}"
     except Exception:
         PROJECT_COPYRIGHT = "Copyright (c) Unknown"
-except Exception:
-    pass
 
 try:
-    del get_license_type
-    del get_project_name
-    del get_version
-    globals().pop("mdata", None)
+    del _get_license_type
+    del _get_project_name
+    del _get_version
+    globals().pop("_mdata", None)
+    globals().pop("_meta_name", None)
     globals().pop("_split", None)
 except Exception:
     pass
