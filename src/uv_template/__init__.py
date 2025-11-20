@@ -38,11 +38,11 @@ def _get_project_name(metadata: importlib.metadata.PackageMetadata) -> str:
 
 
 # Define failsafe values
-PROJECT_AUTHOR = "Unknown"
-PROJECT_COPYRIGHT = "Copyright (c) Unknown"
-PROJECT_EMAIL = ""
+PROJECT_AUTHOR = "{{ cookiecutter.full_name }}"
+PROJECT_COPYRIGHT = "Copyright (c) {{ cookiecutter.full_name }}"
+PROJECT_EMAIL = "{{ cookiecutter.email }}"
 PROJECT_LICENSE = "Unknown"
-PROJECT_NAME = "Unknown"
+PROJECT_NAME = "# {{ cookiecutter.project_name }}"
 PROJECT_VERSION = "0.0.0-error"
 
 # Try to set values, but avoid failing

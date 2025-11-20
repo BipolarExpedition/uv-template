@@ -3,15 +3,16 @@ requires = ["uv_build>=0.9.4,<0.10.0"]
 build-backend = "uv_build"
 
 [project]
-name = "uv-template"
-version = "0.1.0"
-description = "Add your description here"
+name = "{{ cookiecutter.pypi_package_name }}"
+version = "{{ cookiecutter.first_version }}"
+description = "{{ cookiecutter.project_short_description }}"
 readme = { file = "README.md", content-type = "text/markdown" }
 keywords = ['python','cli']
 license = "MIT"
-license-files = ["LICENSE"]
-authors = [{ name = "BipolarExpedition", email = "lastdoc39@gmail.com" }]
-requires-python = ">=3.12,<4.0"
+license-files = ["LICEN[CS]E*"]
+authors = [{ name = "{{ cookiecutter.full_name }}", email = "{{ cookiecutter.email }}" }]
+maintainers = [{ name = "{{ cookiecutter.full_name }}", email = "{{ cookiecutter.email }}" }]
+requires-python = ">=3.12"
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Programming Language :: Python",
@@ -24,6 +25,14 @@ dependencies = [
     "typer>=0.20.0"
 ]
 
+# TODO: Uncomment the valid links
+[project.urls]
+# Issues = "https://github.com/{{ cookiecutter.__gh_slug }}/issues"
+# Documentation = "https://readthedocs.org"
+# Changelog = "https://github.com/{{ cookiecutter.__gh_slug }}/blob/master/CHANGELOG.md"
+# Repository = "https://github.com/{{ cookiecutter.__gh_slug }}.git"
+# Homepage = "https://github.com/{{ cookiecutter.__gh_slug }}"
+
 [dependency-groups]
 dev = [
     "pytest>=8.4.2",
@@ -34,7 +43,7 @@ dev = [
 ]
 
 [project.scripts]
-uv-template = "uv_template.cli:app"
+{{ cookiecutter.project_slug }} = "{{ cookiecutter.project_slug }}.cli:app"
 
 [tool.pyright]
 include = ["src", "tests"]
@@ -54,7 +63,7 @@ pythonpath = ["src"]
 testpaths = ["tests"]
 addopts = [
     "--import-mode=importlib",
-    "--cov=uv_template",
+    "--cov={{ cookiecutter.project_slug }}",
     "--cov-report=term-missing",
     "-ra"
 ]
