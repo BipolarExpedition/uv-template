@@ -16,7 +16,7 @@ def get_license_type(metadata: importlib.metadata.PackageMetadata) -> str:
     """Return SPDX short identifier or Unknown"""
     try:
         _license = metadata["License-Expression"]
-        # Special case for my prefered license
+        # Special case for my preferred license
         if not _license:
             _license = metadata["License"]
             if _license and _license.lower().startswith("mit license"):

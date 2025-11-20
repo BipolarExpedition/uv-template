@@ -1,11 +1,9 @@
-from typing import Optional
-
 import typer
 from rich import print
 
 from . import PROJECT_COPYRIGHT, PROJECT_NAME, PROJECT_VERSION, __package__, __version__  # noqa: F401
 
-app = typer.Typer(name=PROJECT_NAME, help=f"A command line inteface for {PROJECT_NAME}")
+app = typer.Typer(name=PROJECT_NAME, help=f"A command line interface for {PROJECT_NAME}")
 
 
 def version_callback(value: bool):
@@ -16,7 +14,7 @@ def version_callback(value: bool):
 
 @app.command()
 def main(
-    version: Optional[bool] = typer.Option(
+    version: bool | None = typer.Option(
         None, "--version", callback=version_callback, help="Print the version and exit", is_eager=True
     ),
 ):
