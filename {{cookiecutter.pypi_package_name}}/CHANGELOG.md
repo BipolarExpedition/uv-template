@@ -12,5 +12,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [dev] Test for "--version" in CLI
 - This CHANGELOG file to hopefully serve as an evolving example of a
   standardized open source project CHANGELOG.
-- Inserted placeholders
-- Moved template to expected folder with placeholder name
