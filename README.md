@@ -1,7 +1,7 @@
 # TPL_PROJECT_TITLE_README
 
 [![MIT License](https://img.shields.io/github/license/BipolarExpedition/paperbot?style=for-the-badge&logo=mit)](https://opensource.org/licenses/MIT)
-[![Python 3.10+](https://img.shields.io/badge/Python-3.12-blue?style=for-the-badge&logo=python&logoColor=yellow&color=blue)](https://docs.python.org/3.12/)
+[![Python 3.12+](https://img.shields.io/badge/Python-3.12-blue?style=for-the-badge&logo=python&logoColor=yellow&color=blue)](https://docs.python.org/3.12/)
 [![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json&style=for-the-badge)](https://github.com/astral-sh/uv)
 
 TPL_DESCRIPTION_SHORT_README
