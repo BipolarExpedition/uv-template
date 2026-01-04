@@ -223,3 +223,6 @@ __marimo__/
 # OS based files
 .DS_Store
 Thumbs.db
+
+# Personal Settings
+.continue

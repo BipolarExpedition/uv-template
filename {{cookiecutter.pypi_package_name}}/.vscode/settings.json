@@ -28,6 +28,7 @@
         "**/__pycache__": true,
         "**/.pytest_cache": true,
         "**/.mypy_cache": true,
-        "**/.ruff_cache": true
+        "**/.ruff_cache": true,
+        ".venv": true
     }
 }

@@ -1,0 +1,15 @@
+{
+    "full_name": "BipolarExpedition(Doc)",
+    "email": "lastdoc39@gmail.com",
+    "github_username": "BipolarExpedition",
+    "project_name": "Python Boilerplate",
+    "_replace_rules": "{'-': ['_', '/', ' '], '': ['#', '$', '!', '@', '%', '^', '&', '*', '(', ')', '[', ']', '{', '}', '|', '\\', ':', ';', '\"', '\\'', '<', '>', ',', '.']}",
+    "package_name": "{% set name = cookiecutter.project_name | lower %}{% for new, old_list in (cookiecutter._replace_rules | from_json).items() %}{% for old in old_list %}{% set name = name | replace(old, new) %}{% endfor %}{% endfor %}{{ name }}",
+    "project_slug": "{{ cookiecutter.pypi_package_name | replace('-', '_') }}",
+    "project_short_description": "This boiler plate hasn't been changed.",
+    "pypi_username": "{{ cookiecutter.github_username }}",
+    "first_version": "0.1.0",
+    "__gh_slug": "{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}",
+    "python_version": "3.12",
+    "license": "MIT"
+}

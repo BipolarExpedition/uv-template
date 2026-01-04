@@ -3,35 +3,33 @@ requires = ["uv_build>=0.9.4,<0.10.0"]
 build-backend = "uv_build"
 
 [project]
-name = "{{ cookiecutter.pypi_package_name }}"
-version = "{{ cookiecutter.first_version }}"
-description = "{{ cookiecutter.project_short_description }}"
+name = "uv-template"
+version = "0.1.0"
+description = "A cookiecutter template for modern python with uv_build"
 readme = { file = "README.md", content-type = "text/markdown" }
-keywords = ['python','cli']
+keywords = ['python','template','cookiecutter', 'cli']
 license = "MIT"
 license-files = ["LICEN[CS]E*"]
-authors = [{ name = "{{ cookiecutter.full_name }}", email = "{{ cookiecutter.email }}" }]
-maintainers = [{ name = "{{ cookiecutter.full_name }}", email = "{{ cookiecutter.email }}" }]
-requires-python = ">={{ cookiecutter.python_version }}"
+authors = [{ name = "BipolarExpedition", email = "lastdoc39@gmail.com" }]
+maintainers = [{ name = "BipolarExpedition", email = "lastdoc39@gmail.com" }]
+requires-python = ">=3.10"
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Programming Language :: Python",
-    "Programming Language :: Python :: {{ cookiecutter.python_version }}",
     "License :: OSI Approved :: MIT License",
 ]
 dependencies = [
     "rich>=14.2.0",
     "typer>=0.20.0",
-    "loguru>=0.7.3",
-    "pydantic"
+    "pytest",
+    "cookiecutter"
 ]
 
-# TODO: Uncomment the valid links
 [project.urls]
-# Issues = "https://github.com/{{ cookiecutter.__gh_slug }}/issues"
-# Documentation = "https://{{ cookiecutter.pypi_package_name }.readthedocs.org"
-# Changelog = "https://github.com/{{ cookiecutter.__gh_slug }}/blob/master/CHANGELOG.md"
-# Repository = "https://github.com/{{ cookiecutter.__gh_slug }}.git"
+Issues = "https://github.com/BipolarExpedition/uv-template/issues"
+# Documentation = "https://readthedocs.org"
+Changelog = "https://github.com/BipolarExpedition/uv-template/blob/master/CHANGELOG.md"
+Repository = "https://github.com/BipolarExpedition/uv-template.git"
 # Homepage = "https://github.com/{{ cookiecutter.__gh_slug }}"
 
 [dependency-groups]
@@ -43,16 +41,14 @@ dev = [
     "mypy>=1.18.2",
 ]
 
-[project.scripts]
-{{ cookiecutter.pypi_package_name }} = "{{ cookiecutter.project_slug }}.cli:app"
-
 [tool.pyright]
 include = ["src", "tests"]
 exclude = [
     "**/node_modules",
     "**/__pycache__",
     ".venv",
-    ".git"
+    ".git",
+    "??cookiecutter.pypi_package_name??"
 ]
 venvPath = "."
 venv = ".venv"
@@ -64,20 +60,20 @@ pythonpath = ["src"]
 testpaths = ["tests"]
 addopts = [
     "--import-mode=importlib",
-    "--cov={{ cookiecutter.project_slug }}",
-    "--cov-report=term-missing",
-    "-ra"
+    "-ra",
+    "-s"
 ]
 norecursedirs = [
     ".git",
     ".venv",
     ".secrets",
     "design_docs",
-    "docs"
+    "docs",
+    "??cookiecutter.pypi_package_name??"
 ]
 
 [tool.mypy]
-python_version = "{{ cookiecutter.python_version }}"
+python_version = "3.10"
 files = ["src", "tests"]
 check_untyped_defs = true
 disallow_any_generics = true
@@ -89,7 +85,8 @@ warn_unused_ignores = true
 exclude = [
     "docs",
     ".secrets",
-    "design_docs"
+    "design_docs",
+    "??cookiecutter.pypi_package_name??"
 ]
 # Optional depending on project
 # plugins = "pydantic.mypy"
@@ -109,13 +106,14 @@ parallel = true
 source = ["src"]
 
 [tool.ruff]
-target-version = "py{{ cookiecutter.python_version | replace('.', '') }}"
+target-version = "py310"
 indent-width = 4
 line-length = 120
 respect-gitignore = true
 extend-exclude = [
     ".secrets",
-    "design_docs"
+    "design_docs",
+    "??cookiecutter.pypi_package_name??"
 ]
 
 [tool.ruff.format]
@@ -141,9 +139,9 @@ extend-select = [
     "FAST", # FastAPI checks
     "PT",   # pytest checks
     "PTH",  # use pathlib
-    "T20",  # (flake8-print) catch accidental print() statements
 
 ]
+
 # Consider:  LOG, G, DOC
 extend-ignore = [
     "B008",         # occaisonal false positives
@@ -167,4 +165,3 @@ convention = "google"
 [tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["E402"]
 "**/{tests,docs,tools}/*" = ["E402", "S101"]
-"src/**/cli.py" = ["T201"]  # # Allow print() only in CLI commands
