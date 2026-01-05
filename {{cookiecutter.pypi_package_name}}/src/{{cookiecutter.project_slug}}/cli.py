@@ -9,6 +9,7 @@ from . import PROJECT_COPYRIGHT, PROJECT_NAME, PROJECT_VERSION, __version__  # n
 
 from .logging import setup_logging
 from loguru import logger
+from .configuration import Settings
 
 # from pydantic import BaseModel, SecretStr
 # class Config(BaseModel):
@@ -70,12 +71,13 @@ def main(
     logger.debug("Debug logging is enabled")
     logger.info(f"Starting {PROJECT_NAME} version {PROJECT_VERSION}")
 
+    logger.debug("Loading configuration")
+    config = Settings.load()
+
     print(f"\n[cyan]This is the default action of [bold magenta]{PROJECT_NAME}[/bold magenta][/cyan]")
 
     print(f"\nReplace [green]this message[/green] by putting your code into {__package__}.cli:main")
     print("See Typer documentation at https://typer.tiangolo.com/")
-
-    print(f"\nPossible default settings: {typer.get_app_dir(PROJECT_NAME)}")
 
     logger.debug("This is a debug message")
     logger.info("This is an info message")
