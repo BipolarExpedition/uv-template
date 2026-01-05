@@ -33,7 +33,7 @@ def setup_logging(level: int | str = logging.INFO,
             loguru_locals: bool = False,
             loguru_rotation: Optional[str | int | datetime.time | datetime.timedelta] = "10 MB",
             loguru_retention: Optional[str | int | datetime.timedelta] = "10 days",
-            loguru_compression: str | callable = "gz",  # "gz", "bz2", "xz", "lzma", "tar", "tar.gz", "tar.bz2", "tar.xz", "zip"
+            loguru_compression: str = "gz",  # "gz", "bz2", "xz", "lzma", "tar", "tar.gz", "tar.bz2", "tar.xz", "zip"
             loguru_watch_files: bool = False,
             loguru_delay_file_creation: bool = False,
         ) -> None:
@@ -76,7 +76,7 @@ def setup_logging(level: int | str = logging.INFO,
         markup = console_markup,
         omit_repeated_times = console_omit_repeated_times,
     )
-    handler_console.setFormatter(logging.Formatter(format_console))
+    #handler_console.setFormatter(logging.Formatter(format_console))
 
     logger.add(
         handler_console,

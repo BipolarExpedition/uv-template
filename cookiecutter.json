@@ -3,8 +3,11 @@
     "email": "lastdoc39@gmail.com",
     "github_username": "BipolarExpedition",
     "project_name": "Python Boilerplate",
-    "_replace_rules": "{'-': ['_', '/', ' '], '': ['#', '$', '!', '@', '%', '^', '&', '*', '(', ')', '[', ']', '{', '}', '|', '\\', ':', ';', '\"', '\\'', '<', '>', ',', '.']}",
-    "package_name": "{% set name = cookiecutter.project_name | lower %}{% for new, old_list in (cookiecutter._replace_rules | from_json).items() %}{% for old in old_list %}{% set name = name | replace(old, new) %}{% endfor %}{% endfor %}{{ name }}",
+    "_replace_rules": {
+        "-": ["_", "/", " "],
+        "": ["#", "$", "!", "@", "%", "^", "&", "*", "(", ")", "[", "]", "{", "}", "|", "\\", ":", ";", "\"", "'", "<", ">", ",", "."]
+    },
+    "pypi_package_name": "{% set ns = namespace(name=cookiecutter.project_name | lower) %}{% for new, old_list in cookiecutter._replace_rules.items() %}{% for old in old_list %}{% set ns.name = ns.name.replace(old, new) %}{% endfor %}{% endfor %}{{ ns.name }}",
     "project_slug": "{{ cookiecutter.pypi_package_name | replace('-', '_') }}",
     "project_short_description": "This boiler plate hasn't been changed.",
     "pypi_username": "{{ cookiecutter.github_username }}",

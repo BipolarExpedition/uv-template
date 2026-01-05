@@ -29,7 +29,7 @@ dependencies = [
 # TODO: Uncomment the valid links
 [project.urls]
 # Issues = "https://github.com/{{ cookiecutter.__gh_slug }}/issues"
-# Documentation = "https://{{ cookiecutter.pypi_package_name }.readthedocs.org"
+# Documentation = "https://{{ cookiecutter.pypi_package_name }}.readthedocs.org"
 # Changelog = "https://github.com/{{ cookiecutter.__gh_slug }}/blob/master/CHANGELOG.md"
 # Repository = "https://github.com/{{ cookiecutter.__gh_slug }}.git"
 # Homepage = "https://github.com/{{ cookiecutter.__gh_slug }}"
