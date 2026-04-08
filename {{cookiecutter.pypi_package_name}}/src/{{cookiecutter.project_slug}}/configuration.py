@@ -1,13 +1,17 @@
 import tomllib
-import tomli_w
-from typing import Optional
 from pathlib import Path
-from pydantic import SecretStr, Field, BaseModel
+
+import tomli_w
+from pydantic import (
+    BaseModel,
+    Field,
+    SecretStr,  # noqa: F401
+)
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class ExampleSection(BaseModel):
     example_key: str = "example_value"
-    maybe_value: Optional[int] = None
+    maybe_value: int | None = None
 
 class Settings(BaseSettings):
     default_config_dir: Path = Field(default=Path.home() / ".config", # / "python-boilerplate",
@@ -16,8 +20,8 @@ class Settings(BaseSettings):
         description="Name of the configuration file.", exclude=True)
     logfile: str = "python-boilerplate.log"
     example_string: str = Field(default="Example Default", description="An example string value.")
-    example_int: Optional[int] = None
-    example_float: Optional[float] = None
+    example_int: int | None = None
+    example_float: float | None = None
     example_bool: bool = True
     example_list: list[int] = [1, 2, 3]
     example_dict: dict[str, str] = {"key": "value", "foo": "bar"}
@@ -31,7 +35,7 @@ class Settings(BaseSettings):
     )
 
     @classmethod
-    def load(cls, custom_file: Optional[Path | str] = None) -> "Settings":
+    def load(cls, custom_file: Path | str | None = None) -> "Settings":
         # Use the provided custom file, or look for config file in standard locations
         if custom_file is not None and Path(custom_file).is_file():
             config_file = Path(custom_file)
@@ -52,10 +56,10 @@ class Settings(BaseSettings):
         
         return cls()
     
-    def save(self, custom_file: Optional[Path] = None) -> None:
+    def save(self, custom_file: Path | str | None = None) -> None:
         # Use the provided custom file, or look for config file in standard locations
-        if custom_file is not None:
-            config_file = custom_file
+        if custom_file is not None:     # noqa: SIM108
+            config_file = Path(custom_file)
         else:
             config_file = self.default_config_dir / self.config_file_name
 

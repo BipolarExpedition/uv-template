@@ -54,12 +54,17 @@ exclude = [
     "**/node_modules",
     "**/__pycache__",
     ".venv",
-    ".git"
+    ".git", "**/.*",
+    ".dev_cache",
+    ".continue"
 ]
 venvPath = "."
 venv = ".venv"
+strict = false
 typeCheckingMode = "standard"
 reportMissingImports = true
+reportOptionalMemberAccess = false
+reportArgumentType = false
 
 [tool.pytest.ini_options]
 pythonpath = ["src","src/{{cookiecutter.project_slug}}"]
@@ -75,7 +80,9 @@ norecursedirs = [
     ".venv",
     ".secrets",
     "design_docs",
-    "docs"
+    "docs",
+    ".continue",
+    ".dev_cache"
 ]
 
 [tool.mypy]
@@ -86,12 +93,15 @@ disallow_any_generics = true
 ignore_missing_imports = true
 no_implicit_optional = true
 show_error_codes = true
+strict = false
 warn_return_any = true
 warn_unused_ignores = true
 exclude = [
     "docs",
     ".secrets",
-    "design_docs"
+    "design_docs",
+    ".continue",
+    ".dev_cache"
 ]
 # Optional depending on project
 # plugins = "pydantic.mypy"
@@ -117,7 +127,9 @@ line-length = 120
 respect-gitignore = true
 extend-exclude = [
     ".secrets",
-    "design_docs"
+    "design_docs",
+    ".continue",
+    ".dev_cache"
 ]
 
 [tool.ruff.format]

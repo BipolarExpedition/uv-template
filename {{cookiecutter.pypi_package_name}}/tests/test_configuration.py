@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from pydantic import SecretStr
-import configuration as config
+from {{ cookiecutter.project_slug }} import configuration as config
+
 
 def test_settings_object():
 

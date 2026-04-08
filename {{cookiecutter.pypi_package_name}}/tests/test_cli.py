@@ -1,14 +1,14 @@
-from importlib import import_module
 from pathlib import Path
+
 from typer.testing import CliRunner
+
+import {{ cookiecutter.project_slug }} as base
+from {{ cookiecutter.project_slug }}.cli import app
 
 TestModuleBase = Path(__file__).parent.parent.stem.replace("-", "_")
 
 
 def test_example_version():
-    app = import_module(f"{TestModuleBase}.cli").app
-    base = import_module(f"{TestModuleBase}")
-
     runner = CliRunner()
 
     result = runner.invoke(app, ["--version"])

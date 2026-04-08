@@ -1,15 +1,13 @@
-from logging import log
 import re
 from pathlib import Path
 
 import typer
 from rich import print  # noqa: A004
 
-from . import PROJECT_COPYRIGHT, PROJECT_NAME, PROJECT_VERSION, __version__  # noqa: F401
-
-from .logging import setup_logging
-from loguru import logger
+from .__init__ import PROJECT_COPYRIGHT, PROJECT_NAME, PROJECT_VERSION, __version__  # noqa: F401
 from .configuration import Settings
+from .mylogging import logger, setup_logging
+
 
 # from pydantic import BaseModel, SecretStr
 # class Config(BaseModel):
@@ -47,10 +45,10 @@ def do_configure_logging(is_verbose: bool,
         console_show_path = True
         console_show_time = True
 
-    logfile_name: Path = Path(".").joinpath(  re.sub(r"[^a-zA-Z0-9]", "_", PROJECT_NAME.lower()) + ".log"  )
+    logfile_name: Path = Path().joinpath(  re.sub(r"[^a-zA-Z0-9]", "_", PROJECT_NAME.lower()) + ".log"  )
 
     setup_logging(level=log_level, console_level=console_level,
-            log_file=logfile_name.resolve(),
+            log_file=str(logfile_name.resolve()),
             console_tracebacks=console_tracebacks,
             console_show_time=console_show_time,
             console_locals=console_show_locals,
