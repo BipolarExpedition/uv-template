@@ -9,6 +9,7 @@ from pydantic import (
 )
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+
 class ExampleSection(BaseModel):
     example_key: str = "example_value"
     maybe_value: int | None = None

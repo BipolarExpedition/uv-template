@@ -4,10 +4,9 @@ from pathlib import Path
 import typer
 from rich import print  # noqa: A004
 
-from .__init__ import PROJECT_COPYRIGHT, PROJECT_NAME, PROJECT_VERSION, __version__  # noqa: F401
+from . import PROJECT_COPYRIGHT, PROJECT_NAME, PROJECT_VERSION, __version__  # noqa: F401
 from .configuration import Settings
 from .mylogging import logger, setup_logging
-
 
 # from pydantic import BaseModel, SecretStr
 # class Config(BaseModel):
@@ -70,7 +69,7 @@ def main(
     logger.info(f"Starting {PROJECT_NAME} version {PROJECT_VERSION}")
 
     logger.debug("Loading configuration")
-    config = Settings.load()
+    config = Settings.load()    # noqa: F841
 
     print(f"\n[cyan]This is the default action of [bold magenta]{PROJECT_NAME}[/bold magenta][/cyan]")
 

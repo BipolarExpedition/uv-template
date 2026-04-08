@@ -42,7 +42,7 @@ PROJECT_AUTHOR = "Unknown"
 PROJECT_COPYRIGHT = "Copyright (c) Unknown"
 PROJECT_EMAIL = ""
 PROJECT_LICENSE = "Unknown"
-PROJECT_NAME = "Uknown Project"
+PROJECT_NAME = "Unknown Project"
 PROJECT_VERSION = "0.0.0-error"
 
 # Try to set values, but avoid failing
