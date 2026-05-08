@@ -1,6 +1,6 @@
 import datetime
-import logging
-from types import FrameType
+import logging as _logging
+from pathlib import Path
 
 from loguru import logger
 from rich.console import Console
@@ -18,9 +18,9 @@ console = Console()
 
 
 def setup_logging(
-    level: int | str = logging.INFO,
+    level: int | str = _logging.INFO,
     console_level: int | str | None = None,
-    log_file: str | None = None,
+    log_file: str | Path | None = None,
     format_console: str | None = "{message}",
     format_logs: str | None = "{time:YYYY-MM-DD HH:mm:ss.SSS} | {level: <8} | {name}:{function}:{line} - {message}",
     console_locals: bool = False,
@@ -46,23 +46,22 @@ def setup_logging(
     """
 
     # Intercept standard logging
-    class InterceptHandler(logging.Handler):
-        def emit(self, record: logging.LogRecord):
+    class InterceptHandler(_logging.Handler):
+        def emit(self, record: _logging.LogRecord):
             try:
-                level: str | int = logger.level(record.levelname).name
+                level = logger.level(record.levelname).name
             except ValueError:
-                level = record.levelno
+                level = record.levelno  # type: ignore
 
-            frame: FrameType | None = None
-            frame, depth = logging.currentframe(), 2
-            while frame and frame.f_code.co_filename == logging.__file__:
-                frame = frame.f_back
+            frame, depth = _logging.currentframe(), 2
+            while frame and frame.f_code.co_filename == _logging.__file__:
+                frame = frame.f_back    # type: ignore
                 depth += 1
 
             logger.opt(depth=depth, exception=record.exc_info).log(level, record.getMessage())
 
     logger.remove()
-    logging.basicConfig(handlers=[InterceptHandler()], level=0, force=True)
+    _logging.basicConfig(handlers=[InterceptHandler()], level=0, force=True)
 
     # Handler for my console output
     handler_console = RichHandler(

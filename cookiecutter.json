@@ -11,8 +11,8 @@
     "project_slug": "{{ cookiecutter.pypi_package_name | replace('-', '_') }}",
     "project_short_description": "This boiler plate hasn't been changed.",
     "pypi_username": "{{ cookiecutter.github_username }}",
-    "first_version": "0.1.0",
+    "first_version": "0.0.0.dev1",
     "__gh_slug": "{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}",
-    "python_version": "3.12",
+    "python_version": "3.13",
     "license": "MIT"
 }

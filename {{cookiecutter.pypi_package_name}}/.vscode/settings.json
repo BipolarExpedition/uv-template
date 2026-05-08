@@ -1,10 +1,13 @@
 {
+    "python.defaultInterpreterPath": "",
     "python.analysis.autoImportCompletions": true,
+    "python.terminal.activateEnvInCurrentTerminal": true,
 
 // RUFF: The authority on formatting and linting
     "[python]": {
         "editor.defaultFormatter": "charliermarsh.ruff",
-        "editor.formatOnSave": true,
+// With autosave, having imports disappear before I can use them is annoying
+        "editor.formatOnSave": false,
         "editor.codeActionsOnSave": {
             "source.fixAll": "explicit",
             "source.organizeImports": "explicit"
@@ -28,6 +31,48 @@
         "**/.pytest_cache": true,
         "**/.mypy_cache": true,
         "**/.ruff_cache": true,
-        ".venv": true
-    }
+        "**/.coverage": true,
+    },
+    "python-envs.workspaceSearchPaths": [
+        ".venv"
+    ],
+    "ruff.interpreter": [
+        "${workspaceFolder}/.venv/bin/python"
+    ],
+    "python.analysis.includeVenvInWorkspaceSymbols": false,
+    "python.analysis.packageIndexDepths": [
+
+        {
+            "name": "sklearn",
+            "depth": 2
+        },
+        {
+            "name": "matplotlib",
+            "depth": 2
+        },
+        {
+            "name": "scipy",
+            "depth": 2
+        },
+        {
+            "name": "django",
+            "depth": 2
+        },
+        {
+            "name": "flask",
+            "depth": 2
+        },
+        {
+            "name": "fastapi",
+            "depth": 2
+        },
+        {
+            "name": "cuda",
+            "depth": 3,
+            "includeAllSymbols": true
+        }
+    ],
+    "python.missingPackage.severity": "Warning",
+    "python.REPL.enableREPLSmartSend": false,
+    "debugpy.showPythonInlineValues": true
 }

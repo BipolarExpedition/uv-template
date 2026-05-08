@@ -38,11 +38,11 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "pytest>=8",
-    "pytest-cov>=7",
+    "pytest",
+    "pytest-cov",
     # "pytest-mock", # As needed
-    "ruff>=0.14",
-    "mypy>=1",
+    "ruff",
+    "mypy",
 ]
 
 [project.scripts]
@@ -51,10 +51,11 @@ dev = [
 [tool.pyright]
 include = ["src", "tests"]
 exclude = [
+    "**/.*",
     "**/node_modules",
     "**/__pycache__",
     ".venv",
-    ".git", "**/.*",
+    ".git",
     ".dev_cache",
     ".continue"
 ]
@@ -73,8 +74,11 @@ addopts = [
     "--import-mode=importlib",
     "--cov={{ cookiecutter.project_slug }}",
     "--cov-report=term-missing",
-    "-ra"
+    "-ra",
+    "-s",
+    "-m not slow"
 ]
+markers = [ "slow: Slow test that should not be run by default" ]
 norecursedirs = [
     ".git",
     ".venv",
@@ -101,7 +105,8 @@ exclude = [
     ".secrets",
     "design_docs",
     ".continue",
-    ".dev_cache"
+    ".dev_cache",
+    "**/.*"
 ]
 # Optional depending on project
 # plugins = "pydantic.mypy"
@@ -129,7 +134,8 @@ extend-exclude = [
     ".secrets",
     "design_docs",
     ".continue",
-    ".dev_cache"
+    ".dev_cache",
+    "**/.*"
 ]
 
 [tool.ruff.format]
@@ -168,6 +174,12 @@ extend-ignore = [
     "S404",         # subprocess module
     "S602","S603","S604",   #
     "S605","S606", "S607",  #
+    "I001",
+    "SIM103", # Return the condition directly
+    "SIM108",       # Dont force ternary,
+    "UP045",        # Dont force type | None
+    "UP007"         # Sometimes Union is wanted
+    #"SIM095"        # allow lazy "a b c".split(" ")
 ]
 fixable = ["ALL"]
 unfixable = []

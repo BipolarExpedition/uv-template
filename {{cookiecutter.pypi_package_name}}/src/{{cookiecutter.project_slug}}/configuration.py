@@ -1,7 +1,6 @@
 import tomllib
-from pathlib import Path
-
 import tomli_w
+from pathlib import Path
 from pydantic import (
     BaseModel,
     Field,

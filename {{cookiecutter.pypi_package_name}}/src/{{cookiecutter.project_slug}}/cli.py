@@ -21,11 +21,14 @@ def version_callback(value: bool) -> None:
         print(f"{PROJECT_NAME} {__version__}")
         raise typer.Exit()
 
-def do_configure_logging(is_verbose: bool,
-        is_debug: bool, 
-        do_log_file: bool = True
-    ) -> None:
 
+@app.callback()
+def common(
+    version: bool = typer.Option(None, "--version", callback=version_callback, is_eager=True),
+):
+    pass
+
+def do_configure_logging(is_verbose: bool, is_debug: bool, do_log_file: bool = True) -> None:
     console_level = "WARNING"
     log_level = "WARNING"
     console_tracebacks = False
@@ -58,11 +61,8 @@ def do_configure_logging(is_verbose: bool,
 
 @app.command()
 def main(
-    version: bool | None = typer.Option(
-        None, "--version", callback=version_callback, help="Print the version and exit", is_eager=True
-    ),
     verbose: bool = typer.Option(False, "--verbose", "-v", help="Enable verbose output"),
-    debug: bool = typer.Option(False, "--debug", "-d", help="Enable debug output")
+    debug: bool = typer.Option(False, "--debug", "-d", help="Enable debug output"),
 ) -> None:
     do_configure_logging(verbose, debug)
     logger.debug("Debug logging is enabled")
@@ -70,6 +70,7 @@ def main(
 
     logger.debug("Loading configuration")
     config = Settings.load()    # noqa: F841
+    # config = Settings.load(Path() / "{{cookiecutter.project_slug}}.toml")  # noqa: F841
 
     print(f"\n[cyan]This is the default action of [bold magenta]{PROJECT_NAME}[/bold magenta][/cyan]")
 
