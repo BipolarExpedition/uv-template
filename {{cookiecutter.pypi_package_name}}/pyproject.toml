@@ -43,6 +43,7 @@ dev = [
     # "pytest-mock", # As needed
     "ruff",
     "mypy",
+    "pip>=26.1.1",
 ]
 
 [project.scripts]

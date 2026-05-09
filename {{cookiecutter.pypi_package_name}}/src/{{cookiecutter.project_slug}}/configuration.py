@@ -8,17 +8,25 @@ from pydantic import (
 )
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+from . import PROJECT_NAME  # noqa: F401
+
 
 class ExampleSection(BaseModel):
     example_key: str = "example_value"
     maybe_value: int | None = None
 
 class Settings(BaseSettings):
-    default_config_dir: Path = Field(default=Path.home() / ".config", # / "python-boilerplate",
-        description="Default path to user configuration file.", exclude=True)
-    config_file_name: Path = Field(default=Path("python_boilerplate.toml"),
-        description="Name of the configuration file.", exclude=True)
-    logfile: str = "python-boilerplate.log"
+    default_config_dir: Path = Field(
+        default=Path.home() / ".config",
+        description="Default path to user configuration file.",
+        exclude=True
+    )
+    config_file_name: Path = Field(default=Path(
+        f"{PROJECT_NAME}.toml"),
+        description="Name of the configuration file.",
+        exclude=True
+    )
+    logfile: str = f"{PROJECT_NAME}.log"
     example_string: str = Field(default="Example Default", description="An example string value.")
     example_int: int | None = None
     example_float: float | None = None
@@ -28,7 +36,7 @@ class Settings(BaseSettings):
     example_section: ExampleSection = ExampleSection()
 
     model_config = SettingsConfigDict(
-        env_prefix="PYTHON_BOILERPLATE_",
+        env_prefix=f"{PROJECT_NAME.upper()}_",
         env_nested_delimiter="__",
         env_file_encoding="utf-8",
         extra="ignore",
